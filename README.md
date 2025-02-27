@@ -107,7 +107,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📫 Contact
 
-Dr. M. Reza Hosseini - reza.hosseini@unimelb.edu.au
+Dr. M. Reza Hosseini - mreza.hosseini@unimelb.edu.au
 
 ---
 
