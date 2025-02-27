@@ -1,0 +1,46 @@
+name: Generate Visualizations
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
+      - name: Create sample visualization
+        run: |
+          mkdir -p images
+          echo "Creating test visualization..."
+          python -c "
+import matplotlib.pyplot as plt
+import numpy as np
+plt.figure(figsize=(10, 6))
+x = np.linspace(0, 10, 100)
+plt.plot(x, np.sin(x))
+plt.title('Sample Visualization')
+plt.savefig('images/test_visualization.png')
+print('Visualization created successfully')
+          "
+      
+      - name: Commit changes
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add images/test_visualization.png
+          git commit -m "Add test visualization" || echo "No changes to commit"
+          git push
